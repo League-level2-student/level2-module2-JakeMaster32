@@ -27,7 +27,7 @@ Segment head;
 int foodX;
 int foodY;
 int direction = UP;
-int eaten = 0;
+int eaten = 1;
 ArrayList <Segment> array = new ArrayList <Segment> ();
 
 //*
@@ -62,6 +62,7 @@ void draw() {
   move();
   drawSnake();
   eat();
+  text(""+eaten, 250,250);
 }
 
 void drawFood() {
@@ -74,6 +75,7 @@ void drawSnake() {
   //Draw the head of the snake followed by its tail
  fill ( #35ED42);
   rect(head.x,head.y,10,10);
+  manageTail();
 }
 
 
@@ -102,7 +104,10 @@ void manageTail() {
 void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
   for (int g = 0; g< array.size(); g++) {
-if (array.get(g).x == head.x && array.get(g).y == head.y) {}
+if (array.get(g).x == head.x && array.get(g).y == head.y) {
+eaten = 1;
+array = new ArrayList<Segment>();
+}
 }
 
 }
@@ -169,5 +174,6 @@ void eat() {
 if (foodX == head.x && foodY == head.y) {
 eaten = eaten + 1;
 dropFood();
+array.add(new Segment(head.x, head.y));
 }
 }
